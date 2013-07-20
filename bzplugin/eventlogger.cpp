@@ -14,7 +14,7 @@ public:
 };
 
 EventPoster::EventPoster() : cURLManager(){
-  setURL("http://10.0.1.5:3000/bzflag");
+  setURL("http://10.0.1.6:3000/bzflag");
 }
 
 void EventPoster::addKeyValuePair(const char *key, const char *value)
@@ -61,7 +61,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("player", playerRecord->callsign.c_str());
     evPoster->addKeyValuePair("flag", fge->flagType);
     evPoster->postStuff();
-    delete evPoster;
+
     // bz_sendTextMessage(BZ_SERVER, BZ_ALLUSERS, "laffen teek!!!");
     break;
   }
@@ -76,7 +76,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("player", playerRecord->callsign.c_str());
     evPoster->addKeyValuePair("flag", fde->flagType);
     evPoster->postStuff();
-    delete evPoster;
+
     break;
   }
 
@@ -91,7 +91,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("player", playerRecord->callsign.c_str());
     evPoster->addKeyValuePair("flag", sfed->type.c_str());
     evPoster->postStuff();
-    delete evPoster;
+
     // bz_setPlayerWins(p, player->wins+10);
     break;
   }
@@ -111,7 +111,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("victim", playerRecord->callsign.c_str());
     evPoster->addKeyValuePair("flag", flag.c_str());
     evPoster->postStuff();
-    delete evPoster;
+
     break;
   }
 
@@ -119,8 +119,14 @@ void EventLogger::Event(bz_EventData *eventData)
     EventPoster* evPoster = new EventPoster();
     evPoster->addKeyValuePair("action", "gameend");
     evPoster->postStuff();
-    delete evPoster;
+
     break;
+  }
+
+  case bz_eGameStartEvent: {
+    EventPoster*  evPoster = new EventPoster();
+    evPoster->addKeyValuePair("action", "gamestart");
+    evPoster->postStuff();
   }
 
   case bz_eGetPlayerInfoEvent: {
@@ -135,7 +141,7 @@ void EventLogger::Event(bz_EventData *eventData)
       strcpy(team, "hunter");
     evPoster->addKeyValuePair("team", team);
     evPoster->postStuff();
-    delete evPoster;
+
     break;
 
   }
@@ -147,7 +153,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("action", "join");
     evPoster->addKeyValuePair("player",  playerRecord->callsign.c_str());
     evPoster->postStuff();
-    delete evPoster;
+
     break;
   }
 
@@ -158,7 +164,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("action", "part");
     evPoster->addKeyValuePair("player",  playerRecord->callsign.c_str());
     evPoster->postStuff();
-    delete evPoster;
+
     break;
   }
 
@@ -177,7 +183,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("player", playerRecord->callsign.c_str());
     evPoster->addKeyValuePair("team", team);
     evPoster->postStuff();
-    delete evPoster;
+
     break;
 
 
@@ -188,13 +194,17 @@ void EventLogger::Event(bz_EventData *eventData)
 
 void EventLogger::Init ( const char* /*commandLine*/ )
 {
+  EventPoster* evPoster = new EventPoster();
+  evPoster->addKeyValuePair("action", "start");
+  evPoster->postStuff();
   bz_debugMessage(1, "eventlogger initialized");
   // register events for pick up, drop, and fire, kill
   Register(bz_eFlagGrabbedEvent);
   Register(bz_eFlagDroppedEvent);
   Register(bz_eShotFiredEvent);
   Register(bz_ePlayerDieEvent);
-  Register(bz_eGameEndEvent);
+  // Register(bz_eGameEndEvent);
+  // Register(bz_eGameStartEvent);
   Register(bz_eGetPlayerInfoEvent);
   Register(bz_ePlayerJoinEvent);
   Register(bz_ePlayerPartEvent);
@@ -203,6 +213,9 @@ void EventLogger::Init ( const char* /*commandLine*/ )
 
 void EventLogger::Cleanup ( void )
 {
+  EventPoster* evPoster = new EventPoster();
+  evPoster->addKeyValuePair("action", "stop");
+  evPoster->postStuff();
   // unregister our events
   Flush();
   bz_debugMessage(1, "eventlogger plugin unloaded");
