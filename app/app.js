@@ -66,6 +66,9 @@ function playerCapturesFlag(player, flagid){
 	var lightid = player2lightid[player];
 	var flag = flags[flagid];
 
+	if(lightid == null) return console.log('unknown player: ' + player);
+	if(flag == null) return console.log('unknown flag: ' + flagid);
+
 	if(flag.hue == 0){
 		// berekeen aan de hand van index
 		var nrOfFlags = Object.keys(flags).length;
