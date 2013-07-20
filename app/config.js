@@ -1,7 +1,7 @@
 exports.player2lightid = {
-	'matt' 		: 1,
-	'robby' 	: 2,
-	'crockysam' : 3
+	'm4tt' 		: 1,
+	'robby' 	: 4,
+	'crockysam' : 5
 };
 
 //flag.i is een beetje hacky :p

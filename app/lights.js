@@ -5,7 +5,7 @@ var hue = require("node-hue-api"),
 	lightState = hue.lightState;
 
 var hostname = "10.0.1.2";
-var username = "3c52c72413928b8f24c90b4cf445d17"; // sams username
+var username = "robbywauters"; // sams username
 
 var api = new HueApi(hostname, username);
 
@@ -33,6 +33,15 @@ function turnOffLight(lightid){
 	});
 }
 
+function turnOnLight(lightid){
+	api.setLightState(lightid, {
+		on: true,
+		transitiontime: 0
+	}, function (err, lights) {
+		if (err) return console.log(err);
+	});
+}
+
 function burstLight(lightid){
 	// api.setLightState(lightid, {
 	// 	alert: 'select',
@@ -43,25 +52,34 @@ function burstLight(lightid){
 
 	api.setLightState(lightid, {
 		bri: 255,
-		transitiontime: 0
+		transitiontime: 1
 	}, function (err, lights) {
 		if (err) return console.log(err);
 
 
 		api.setLightState(lightid, {
 			bri: 0,
-			transitiontime: 0
+			transitiontime: 3
 		}, function (err, lights) {
 			if (err) return console.log(err);
 		});
 	});
 }
 
+function dimLight(lightid){
+	api.setLightState(lightid, {
+			bri: 0,
+			transitiontime: 0
+		}, function (err, lights) {
+			if (err) return console.log(err);
+		});
+}
+
 function beamOfLight(){
 
 	burstLight(1);
-	setTimeout("burstLight(2)",100);
-	setTimeout("burstLight(3)",200);
+	setTimeout(function(){burstLight(2)},150);
+	setTimeout(function(){burstLight(3)},300);
 
 }
 
@@ -101,3 +119,5 @@ exports.setLight = setLight;
 exports.burstLight = burstLight;
 exports.beamOfLight = beamOfLight;
 exports.turnOffLight = turnOffLight;
+exports.turnOnLight = turnOnLight;
+exports.dimLight = dimLight;

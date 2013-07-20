@@ -46,12 +46,14 @@ app.get('/beam', function (req, res){
 	lights.beamOfLight();
 });
 
-app.post('/rest/', function (req, res){
+app.post('/bzflag', function (req, res){
 	// responsd immediatly:
 	res.json('thx');
 
 	var action = req.body.action;
 	if(!action) return console.log('no action given');
+
+	console.log(req.body);
 
 	switch(action){
 		case 'shotfired':
@@ -66,6 +68,14 @@ app.post('/rest/', function (req, res){
 		case 'flagdropped':
 			if(!req.body.player) return console.log('no player given');
 			flagDropped( req.body.player);
+			break;
+		case 'kill':
+			if(!req.body.victim) return console.log('no victim given');
+			playerDied( req.body.victim);
+			break;
+		case 'spawn':
+			if(!req.body.player) return console.log('no player given');
+			playerSpawn( req.body.player);
 			break;
 	}
 });
@@ -105,6 +115,24 @@ function shotFired(player){
 	if(!lightid) return console.log('unknown player: ' + player);
 	lights.burstLight(lightid);
 }
+
+function playerDied(player){
+	var lightid = config.player2lightid[player];
+	if(!lightid) return console.log('unknown player: ' + player);
+
+
+	lights.setLight(lightid, 65535, 0);
+	lights.dimLight(lightid);
+	lights.turnOffLight(lightid);
+}
+
+function playerSpawn(player){
+	var lightid = config.player2lightid[player];
+	if(!lightid) return console.log('unknown player: ' + player);
+	lights.turnOnLight(lightid);
+	lights.dimLight(lightid);
+}
+
 
 // ************************************
 // *** Command line interface tests ***
