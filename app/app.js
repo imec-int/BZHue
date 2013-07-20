@@ -8,6 +8,9 @@ var util = require('util');
 var config = require('./config');
 var lights = require('./lights');
 
+// ******************
+// *** WEB SERVER ***
+// ******************
 
 var app = express();
 
@@ -38,6 +41,13 @@ app.get('/', function(req, res){
 	res.render('index', { title: 'Hello World' });
 });
 
+// flagGrabbed('sam', 'SH');
+// shotFired('sam');
+
+
+// **********************************************
+// *** BZFlag Events translated to Hue events ***
+// **********************************************
 
 function flagGrabbed(player, flagid){
 	var lightid = config.player2lightid[player];
@@ -54,45 +64,56 @@ function flagGrabbed(player, flagid){
 	lights.setLight(lightid, flag.hue, sat);
 }
 
+function shotFired(player){
+	var lightid = config.player2lightid[player];
+	if(!lightid) return console.log('unknown player: ' + player);
+	lights.burstLight(lightid);
+}
 
-// lights.startlooping();
-// lights.startlooping();
+// ************************************
+// *** Command line interface tests ***
+// ************************************
 
+/*
+// Test flag color
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+console.log("geef flag (A, CL, G, GM, L, OO, F, R, SH, SW, SR, SB, T, V, WG) en druk ENTER:");
+process.stdin.on('data', function (flagid) {
+	if (flagid === 'quit\n')
+		return process.exit();
+	flagGrabbed('sam', flagid.replace(/\n/, ''));
+});
+*/
 
-flagGrabbed('sam', 'SH');
+/*
+// Test hue codes:
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+console.log("geef hue en druk ENTER:");
+process.stdin.on('data', function (hueString) {
+	if (hueString === 'quit\n')
+		return process.exit();
+	var hue  = hueString.replace(/\n/, '');
+	hue = parseInt(hue);
+	if(isNaN(hue)) return console.log("not a number");
 
+	lights.setLight(1, hue);
+});
+*/
 
+/*
+// Test: shot firing
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+console.log("pres ENTER");
+process.stdin.on('data', function (flagid) {
+	if (flagid === 'quit\n')
+		return process.exit();
 
-
-
-
-
-// DEBUG: Flags test flag through commandline interface:
-// process.stdin.resume();
-// process.stdin.setEncoding('utf8');
-// var util = require('util');
-// console.log("geef flag (A, CL, G, GM, L, OO, F, R, SH, SW, SR, SB, T, V, WG) en druk ENTER:");
-// process.stdin.on('data', function (flagid) {
-// 	if (flagid === 'quit\n')
-// 		return process.exit();
-// 	flagGrabbed('sam', flagid.replace(/\n/, ''));
-// });
-
-// // DEBUG: test colors via commandline interface:
-// process.stdin.resume();
-// process.stdin.setEncoding('utf8');
-// var util = require('util');
-// console.log("geef hue en druk ENTER:");
-// process.stdin.on('data', function (hueString) {
-// 	if (hueString === 'quit\n')
-// 		return process.exit();
-// 	var hue  = hueString.replace(/\n/, '');
-// 	hue = parseInt(hue);
-// 	if(isNaN(hue)) return console.log("not a number");
-
-// 	lights.setLight(1, hue);
-// });
-
+	shotFired('sam');
+});
+*/
 
 
 

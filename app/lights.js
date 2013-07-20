@@ -1,8 +1,8 @@
 var util = require('util');
 
 var hue = require("node-hue-api"),
-    HueApi = hue.HueApi,
-    lightState = hue.lightState;
+	HueApi = hue.HueApi,
+	lightState = hue.lightState;
 
 var hostname = "10.0.1.2";
 var username = "3c52c72413928b8f24c90b4cf445d17"; // sams username
@@ -24,20 +24,37 @@ var api = new HueApi(hostname, username);
 //     console.log(lights);
 // });
 
-// api.setLightState(1, {
-// 	alert: 'select',
-// 	transitiontime: 3
-// }, function (err, lights) {
-//     if (err) throw err;
-//     console.log(lights);
-// });
+
+function burstLight(lightid){
+	// api.setLightState(lightid, {
+	// 	alert: 'select',
+	// }, function (err, lights) {
+	// 	if (err) return console.log(err);
+	// 	console.log(lights);
+	// });
+
+	api.setLightState(lightid, {
+		bri: 255,
+		transitiontime: 1
+	}, function (err, lights) {
+		if (err) return console.log(err);
+
+
+		api.setLightState(lightid, {
+			bri: 0,
+			transitiontime: 1
+		}, function (err, lights) {
+			if (err) return console.log(err);
+		});
+	});
+}
 
 function startlooping(){
 	api.setLightState(1, {
 		effect: 'colorloop'
 	}, function (err, lights) {
-	    if (err) throw err;
-	    console.log(lights);
+		if (err) throw err;
+		console.log(lights);
 	});
 }
 
@@ -46,8 +63,8 @@ function stoplooping(){
 	api.setLightState(1, {
 		effect: 'none'
 	}, function (err, lights) {
-	    if (err) throw err;
-	    console.log(lights);
+		if (err) throw err;
+		console.log(lights);
 	});
 }
 
@@ -56,11 +73,12 @@ function setLight(lightid, hue, sat){
 		hue: hue,
 		sat: sat
 	}, function (err, lights) {
-	    if (err) throw err;
-	    console.log(lights);
+		if (err) throw err;
+		console.log(lights);
 	});
 }
 
 exports.startlooping  = startlooping;
 exports.stoplooping = stoplooping;
 exports.setLight = setLight;
+exports.burstLight = burstLight;
