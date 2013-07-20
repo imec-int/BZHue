@@ -41,6 +41,11 @@ app.get('/', function (req, res){
 	res.render('index', { title: 'Hello World' });
 });
 
+app.get('/beam', function (req, res){
+	res.render('index', { title: 'Hello World' });
+	lights.beamOfLight();
+});
+
 app.post('/rest/', function (req, res){
 	// responsd immediatly:
 	res.json('thx');

@@ -57,6 +57,14 @@ function burstLight(lightid){
 	});
 }
 
+function beamOfLight(){
+
+	burstLight(1);
+	setTimeout("burstLight(2)",100);
+	setTimeout("burstLight(3)",200);
+
+}
+
 function startlooping(){
 	api.setLightState(1, {
 		effect: 'colorloop'
@@ -91,4 +99,5 @@ exports.startlooping  = startlooping;
 exports.stoplooping = stoplooping;
 exports.setLight = setLight;
 exports.burstLight = burstLight;
+exports.beamOfLight = beamOfLight;
 exports.turnOffLight = turnOffLight;
