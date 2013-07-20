@@ -62,7 +62,9 @@ var flags = {
 	WG : {i: 14, code: 'WG', name:'Wings', hue: 0}
 }
 
-function playerCapturesFlag(player, flagid){
+
+
+function flagGrabbed(player, flagid){
 	var lightid = player2lightid[player];
 	var flag = flags[flagid];
 
@@ -82,7 +84,7 @@ function playerCapturesFlag(player, flagid){
 // lights.startlooping();
 // lights.startlooping();
 
-playerCapturesFlag('sam', 'SH');
+flagGrabbed('sam', 'SH');
 
 
 
