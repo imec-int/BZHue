@@ -109,7 +109,7 @@ function shotFired(player){
 // Test flag color
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-console.log("geef flag (A, CL, G, GM, L, OO, F, R, SH, SW, SR, SB, T, V, WG) en druk ENTER:");
+console.log("enter flag code (A, CL, G, GM, L, OO, F, R, SH, SW, SR, SB, T, V, WG) and press ENTER:");
 process.stdin.on('data', function (flagid) {
 	if (flagid === 'quit\n')
 		return process.exit();
@@ -121,7 +121,7 @@ process.stdin.on('data', function (flagid) {
 // Test hue codes:
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-console.log("geef hue en druk ENTER:");
+console.log("enter hue value and press ENTER:");
 process.stdin.on('data', function (hueString) {
 	if (hueString === 'quit\n')
 		return process.exit();
@@ -137,7 +137,7 @@ process.stdin.on('data', function (hueString) {
 // Test: shot firing
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-console.log("pres ENTER");
+console.log("press ENTER");
 process.stdin.on('data', function (flagid) {
 	if (flagid === 'quit\n')
 		return process.exit();
