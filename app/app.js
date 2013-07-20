@@ -8,7 +8,7 @@ var util = require('util');
 var config = require('./config');
 var lights = require('./lights');
 
-/*
+
 var app = express();
 
 app.configure(function(){
@@ -37,8 +37,6 @@ http.createServer(app).listen(app.get('port'), function(){
 app.get('/', function(req, res){
 	res.render('index', { title: 'Hello World' });
 });
-*/
-
 
 
 function flagGrabbed(player, flagid){
