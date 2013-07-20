@@ -49,5 +49,15 @@ function stoplooping(){
 	});
 }
 
+function setLight(lightid, hue){
+	api.setLightState(lightid, {
+		hue: hue
+	}, function (err, lights) {
+	    if (err) throw err;
+	    console.log(lights);
+	});
+}
+
 exports.startlooping  = startlooping;
 exports.stoplooping = stoplooping;
+exports.setLight = setLight;
