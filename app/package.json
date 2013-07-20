@@ -1,0 +1,13 @@
+{
+  "name": "bzhue",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.0rc4",
+    "stylus": "*",
+    "jade": "~0.28.1",
+    "node-hue-api": "~0.2.0"
+  }
+}
