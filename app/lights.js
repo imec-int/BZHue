@@ -33,6 +33,15 @@ function turnOffLight(lightid){
 	});
 }
 
+// function turnOffLight(lightid){
+// 	api.setLightState(lightid, {
+// 		on: false,
+// 		transitiontime: 0
+// 	}, function (err, lights) {
+// 		if (err) return console.log(err);
+// 	});
+// }
+
 function turnOnLight(lightid){
 	api.setLightState(lightid, {
 		on: true,
@@ -69,6 +78,30 @@ function burstLight(lightid){
 function dimLight(lightid){
 	api.setLightState(lightid, {
 			bri: 0,
+			transitiontime: 0
+		}, function (err, lights) {
+			if (err) return console.log(err);
+		});
+}
+
+function turnOnDefaultLight(lightid){
+	api.setLightState(lightid, {
+			on: true,
+			bri: 0,
+			hue: 65535,
+			sat: 0,
+			transitiontime: 0
+		}, function (err, lights) {
+			if (err) return console.log(err);
+		});
+}
+
+function turnOffDefaultLight(lightid){
+	api.setLightState(lightid, {
+			on: false,
+			bri: 0,
+			hue: 65535,
+			sat: 0,
 			transitiontime: 0
 		}, function (err, lights) {
 			if (err) return console.log(err);
@@ -120,4 +153,6 @@ exports.burstLight = burstLight;
 exports.beamOfLight = beamOfLight;
 exports.turnOffLight = turnOffLight;
 exports.turnOnLight = turnOnLight;
+exports.turnOffDefaultLight = turnOffDefaultLight;
+exports.turnOnDefaultLight = turnOnDefaultLight;
 exports.dimLight = dimLight;

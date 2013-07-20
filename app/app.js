@@ -81,6 +81,18 @@ app.post('/bzflag', function (req, res){
 			if(!req.body.player) return console.log('no player given');
 			playerSpawn( req.body.player);
 			break;
+		case 'start':
+			// if(!req.body.player) return console.log('no player given');
+			// playerSpawn( req.body.player);
+			for(var name in lights.player2lightid){
+				playerDied( lights.player2lightid[name]);
+			}
+			break;
+		case 'stop':
+			for(var name in lights.player2lightid){
+				playerDied( lights.player2lightid[name]);
+			}
+			break;
 	}
 });
 
@@ -128,6 +140,7 @@ function playerDied(player){
 	lights.setLight(lightid, 65535, 0);
 	lights.dimLight(lightid);
 	lights.turnOffLight(lightid);
+	// lights.turnOffDefaultLight(lightid);
 }
 
 function playerSpawn(player){
@@ -135,6 +148,7 @@ function playerSpawn(player){
 	if(!lightid) return console.log('unknown player: ' + player);
 	lights.turnOnLight(lightid);
 	lights.dimLight(lightid);
+	// lights.turnOnDefaultLight(lightid);
 }
 
 
