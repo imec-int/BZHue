@@ -93,12 +93,28 @@ app.post('/bzflag', function (req, res){
 				playerDied( lights.player2lightid[name]);
 			}
 			break;
+		case 'gameend':
+			for(var name in lights.player2lightid){
+				playerDied( lights.player2lightid[name]);
+			}
+			break;
+		case 'servermessage':
+			for(var name in lights.player2lightid){
+				// playerDied( lights.player2lightid[name]);
+				console.log("");
+				console.log("SERVER MESSAGE");
+				console.log("");
+			}
+			break;
 	}
 });
 
 // flagGrabbed('matt', 'SH');
 // flagDropped('crockysam');
+// playerSpawn('crockysam');
 // shotFired('crockysam');
+// playerDied('crockysam');
+// lights.deathAnimation(5);
 
 
 // **********************************************
@@ -136,20 +152,23 @@ function playerDied(player){
 	var lightid = config.player2lightid[player];
 	if(!lightid) return console.log('unknown player: ' + player);
 
+	lights.deathAnimation(lightid, function (err){
+		// dim to white and turn off light
+		lights.dimToWhite(lightid, function (err){
+			lights.turnOffLight(lightid);
+		});
+	});
 
-	lights.setLight(lightid, 65535, 0);
-	lights.dimLight(lightid);
-	lights.turnOffLight(lightid);
-	// lights.turnOffDefaultLight(lightid);
 }
 
 function playerSpawn(player){
 	var lightid = config.player2lightid[player];
 	if(!lightid) return console.log('unknown player: ' + player);
 	lights.turnOnLight(lightid);
-	lights.dimLight(lightid);
+	// lights.dimLight(lightid);
 	// lights.turnOnDefaultLight(lightid);
 }
+
 
 
 // ************************************
