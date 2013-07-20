@@ -64,10 +64,19 @@ var api = new HueApi(hostname, username);
 //     console.log(lights);
 // });
 
-var state = lightState.create().on().rgb(255, 255, 0).brightness(0);
 
-api.setLightState(1, state, function (err, lights) {
+// api.setLightState(1, {
+// 	alert: 'select',
+// 	transitiontime: 3
+// }, function (err, lights) {
+//     if (err) throw err;
+//     console.log(lights);
+// });
+
+
+api.setLightState(1, {
+	effect: 'colorloop'
+}, function (err, lights) {
     if (err) throw err;
     console.log(lights);
 });
-
