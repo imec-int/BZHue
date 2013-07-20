@@ -53,6 +53,7 @@ function flagGrabbed(player, flagid){
 		flag.hue = Math.round(65535/nrOfFlags * flag.i);
 	}
 
+	console.log("Setting flag '" + flag.name + "' for player " + player + " to hue = " + flag.hue);
 	lights.setLight(lightid, flag.hue);
 }
 
@@ -61,6 +62,23 @@ function flagGrabbed(player, flagid){
 // lights.startlooping();
 
 flagGrabbed('sam', 'SH');
+
+
+
+
+
+
+
+// DEBUG: Flags testen via commandline interface:
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+var util = require('util');
+console.log("geef flag (A, CL, G, GM, L, OO, F, R, SH, SW, SR, SB, T, V, WG) en druk ENTER:");
+process.stdin.on('data', function (flagid) {
+	if (flagid === 'quit\n')
+		return process.exit();
+	flagGrabbed('sam', flagid.replace(/\n/, ''));
+});
 
 
 
