@@ -26,7 +26,8 @@ var api = new HueApi(hostname, username);
 
 function turnOffLight(lightid){
 	api.setLightState(lightid, {
-		on: false
+		on: false,
+		transitiontime: 0
 	}, function (err, lights) {
 		if (err) return console.log(err);
 	});
@@ -42,14 +43,14 @@ function burstLight(lightid){
 
 	api.setLightState(lightid, {
 		bri: 255,
-		transitiontime: 1
+		transitiontime: 0
 	}, function (err, lights) {
 		if (err) return console.log(err);
 
 
 		api.setLightState(lightid, {
 			bri: 0,
-			transitiontime: 1
+			transitiontime: 0
 		}, function (err, lights) {
 			if (err) return console.log(err);
 		});
@@ -79,7 +80,7 @@ function setLight(lightid, hue, sat){
 	api.setLightState(lightid, {
 		hue: hue,
 		sat: sat,
-		transitiontime: 1
+		transitiontime: 0
 	}, function (err, lights) {
 		if (err) return console.log(err);
 		console.log(lights);
