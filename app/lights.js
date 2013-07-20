@@ -88,7 +88,7 @@ function startlooping(){
 		effect: 'colorloop'
 	}, function (err, lights) {
 		if (err) return console.log(err);
-		console.log(lights);
+		// console.log(lights);
 	});
 }
 
@@ -98,7 +98,7 @@ function stoplooping(){
 		effect: 'none'
 	}, function (err, lights) {
 		if (err) return console.log(err);
-		console.log(lights);
+		// console.log(lights);
 	});
 }
 
@@ -109,7 +109,7 @@ function setLight(lightid, hue, sat){
 		transitiontime: 0
 	}, function (err, lights) {
 		if (err) return console.log(err);
-		console.log(lights);
+		// console.log(lights);
 	});
 }
 

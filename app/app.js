@@ -73,6 +73,10 @@ app.post('/bzflag', function (req, res){
 			if(!req.body.victim) return console.log('no victim given');
 			playerDied( req.body.victim);
 			break;
+		case 'part':
+			if(!req.body.player) return console.log('no player given');
+			playerDied( req.body.player);
+			break;
 		case 'spawn':
 			if(!req.body.player) return console.log('no player given');
 			playerSpawn( req.body.player);
