@@ -1,3 +1,5 @@
+var util = require('util');
+
 var hue = require("node-hue-api"),
     HueApi = hue.HueApi,
     lightState = hue.lightState;
@@ -12,9 +14,9 @@ var api = new HueApi(hostname, username);
 // 	console.log(user);
 // });
 
-// api.getFullState (function(err, config) {
+// api.getFullState (function (err, config) {
 //     if (err) throw err;
-//     console.log(config);
+//     console.log(util.inspect(config, { showHidden: true, depth: null }));
 // });
 
 // api.lights(function(err, lights) {
@@ -49,9 +51,10 @@ function stoplooping(){
 	});
 }
 
-function setLight(lightid, hue){
+function setLight(lightid, hue, sat){
 	api.setLightState(lightid, {
-		hue: hue
+		hue: hue,
+		sat: sat
 	}, function (err, lights) {
 	    if (err) throw err;
 	    console.log(lights);

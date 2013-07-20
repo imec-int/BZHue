@@ -6,19 +6,19 @@ exports.player2lightid = {
 
 //flag.i is een beetje hacky :p
 exports.flags = {
-	A  : {i: 0, code: 'A', name:'Agility', hue: 0},
-	CL : {i: 1, code: 'CL', name:'Cloaking', hue: 0},
-	G  : {i: 2, code: 'G', name:'Genocide', hue: 0},
-	GM : {i: 3, code: 'GM', name:'Guided Missile', hue: 0},
-	L  : {i: 4, code: 'L', name:'Laser', hue: 0},
-	OO : {i: 5, code: 'OO', name:'Oscillation Overthruster', hue: 0},
-	F  : {i: 6, code: 'F', name:'Rapid Fire', hue: 0},
-	R  : {i: 7, code: 'R', name:'Ricochet', hue: 0},
-	SH : {i: 8, code: 'SH', name:'Shield', hue: 0},
-	SW : {i: 9, code: 'SW', name:'Shock Wave', hue: 0},
-	SR : {i: 10, code: 'SR', name:'Steam Roller', hue: 0},
-	SB : {i: 11, code: 'SB', name:'Super Bullet', hue: 0},
-	T  : {i: 12, code: 'T', name:'Tiny', hue: 0},
-	V  : {i: 13, code: 'V', name:'High Speed', hue: 0},
-	WG : {i: 14, code: 'WG', name:'Wings', hue: 0}
+	A  : {code: 'A' , name:'Agility'					, hue: 60607, sat: 253},
+	CL : {code: 'CL', name:'Cloaking'					, hue: 61809, sat: 178}, // lichtroos
+	G  : {code: 'G' , name:'Genocide'					, hue: 65527, sat: 253},
+	GM : {code: 'GM', name:'Guided Missile'				, hue: 60607, sat: 253},
+	L  : {code: 'L' , name:'Laser'						, hue: 49218, sat: 253},
+	OO : {code: 'OO', name:'Oscillation Overthruster'	, hue: 54633, sat: 253},
+	F  : {code: 'F' , name:'Rapid Fire'					, hue: 25717, sat: 254},
+	R  : {code: 'R' , name:'Ricochet'					, hue: 29961, sat: 254},
+	SH : {code: 'SH', name:'Shield'						, hue: 41322, sat: 252},
+	SW : {code: 'SW', name:'Shock Wave'					, hue: 25717, sat: 254},
+	SR : {code: 'SR', name:'Steam Roller'				, hue: 29424, sat: 254},
+	SB : {code: 'SB', name:'Super Bullet'				, hue: 22543, sat: 251},
+	T  : {code: 'T' , name:'Tiny'						, hue: 8436 , sat: 252},
+	V  : {code: 'V' , name:'High Speed'					, hue: 15480, sat: 251},
+	WG : {code: 'WG', name:'Wings'						, hue: 22543, sat: 251}
 }
