@@ -24,6 +24,13 @@ var api = new HueApi(hostname, username);
 //     console.log(lights);
 // });
 
+function turnOffLight(lightid){
+	api.setLightState(lightid, {
+		on: false
+	}, function (err, lights) {
+		if (err) return console.log(err);
+	});
+}
 
 function burstLight(lightid){
 	// api.setLightState(lightid, {
@@ -53,7 +60,7 @@ function startlooping(){
 	api.setLightState(1, {
 		effect: 'colorloop'
 	}, function (err, lights) {
-		if (err) throw err;
+		if (err) return console.log(err);
 		console.log(lights);
 	});
 }
@@ -63,7 +70,7 @@ function stoplooping(){
 	api.setLightState(1, {
 		effect: 'none'
 	}, function (err, lights) {
-		if (err) throw err;
+		if (err) return console.log(err);
 		console.log(lights);
 	});
 }
@@ -71,9 +78,10 @@ function stoplooping(){
 function setLight(lightid, hue, sat){
 	api.setLightState(lightid, {
 		hue: hue,
-		sat: sat
+		sat: sat,
+		transitiontime: 1
 	}, function (err, lights) {
-		if (err) throw err;
+		if (err) return console.log(err);
 		console.log(lights);
 	});
 }
@@ -82,3 +90,4 @@ exports.startlooping  = startlooping;
 exports.stoplooping = stoplooping;
 exports.setLight = setLight;
 exports.burstLight = burstLight;
+exports.turnOffLight = turnOffLight;

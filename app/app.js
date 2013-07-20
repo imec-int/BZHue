@@ -37,12 +37,37 @@ http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
 });
 
-app.get('/', function(req, res){
+app.get('/', function (req, res){
 	res.render('index', { title: 'Hello World' });
 });
 
-// flagGrabbed('sam', 'SH');
-// shotFired('sam');
+app.post('/rest/', function (req, res){
+	// responsd immediatly:
+	res.json('thx');
+
+	var action = req.body.action;
+	if(!action) return console.log('no action given');
+
+	switch(action){
+		case 'shotfired':
+			if(!req.body.player) return console.log('no player given');
+			shotFired(req.body.player);
+			break;
+		case 'flaggrabbed':
+			if(!req.body.player) return console.log('no player given');
+			if(!req.body.flag) return console.log('no flag given');
+			flagGrabbed( req.body.player, req.body.flag );
+			break;
+		case 'flagdropped':
+			if(!req.body.player) return console.log('no player given');
+			flagDropped( req.body.player);
+			break;
+	}
+});
+
+// flagGrabbed('matt', 'SH');
+// flagDropped('crockysam');
+// shotFired('crockysam');
 
 
 // **********************************************
@@ -62,6 +87,12 @@ function flagGrabbed(player, flagid){
 
 	console.log("Setting flag '" + flag.name + "' for player " + player + " to hue = " + flag.hue + ", sat = " + sat);
 	lights.setLight(lightid, flag.hue, sat);
+}
+
+function flagDropped(player){
+	var lightid = config.player2lightid[player];
+	if(!lightid) return console.log('unknown player: ' + player);
+	lights.setLight(lightid, 65535, 0);
 }
 
 function shotFired(player){
