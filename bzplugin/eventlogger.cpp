@@ -108,7 +108,7 @@ void EventLogger::Event(bz_EventData *eventData)
       bz_debugMessage(1, vs);
       for (int i = 0; i < texNo; i++)
         delete epVector[i];
-        epVector.clear();
+      epVector.clear();
     }
     EventPoster* evPoster = new EventPoster();
     epVector.push_back(evPoster);
@@ -306,7 +306,13 @@ void EventLogger::Init ( const char* /*commandLine*/ )
 
 void EventLogger::Cleanup ( void )
 {
-
+  int  texNo = epVector.size();
+  char vs[8];
+  sprintf(vs, "vs %d", texNo);
+  bz_debugMessage(1, vs);
+  for (int i = 0; i < texNo; i++)
+    delete epVector[i];
+  epVector.clear();
 
 
   // unregister our events
