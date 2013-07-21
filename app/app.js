@@ -70,8 +70,9 @@ app.post('/bzflag', function (req, res){
 			flagDropped( req.body.player);
 			break;
 		case 'kill':
+			if(!req.body.player) return console.log('no player given');
 			if(!req.body.victim) return console.log('no victim given');
-			playerDied( req.body.victim);
+			playerDied( req.body.player, req.body.victim);
 			break;
 		case 'part':
 			if(!req.body.player) return console.log('no player given');
@@ -109,12 +110,14 @@ app.post('/bzflag', function (req, res){
 	}
 });
 
-// flagGrabbed('matt', 'SH');
+// flagGrabbed('crockysam', 'G');
 // flagDropped('crockysam');
 // playerSpawn('crockysam');
 // shotFired('crockysam');
-// playerDied('crockysam');
+// playerDied('crockysam', 'robby');
 // lights.deathAnimation(5);
+
+// lights.killedAnimation(5);
 
 
 // **********************************************
@@ -148,9 +151,9 @@ function shotFired(player){
 	lights.burstLight(lightid);
 }
 
-function playerDied(player){
-	var lightid = config.player2lightid[player];
-	if(!lightid) return console.log('unknown player: ' + player);
+function playerDied(killer, victim){
+	var lightid = config.player2lightid[victim];
+	if(!lightid) return console.log('unknown victim: ' + victim);
 
 	lights.deathAnimation(lightid, function (err){
 		// dim to white and turn off light
@@ -159,6 +162,17 @@ function playerDied(player){
 		});
 	});
 
+	var lightidkiller = config.player2lightid[killer];
+	if(!lightidkiller) return console.log('unknown killer: ' + killer);
+
+	// indication for the killer:
+	lights.getLightState(lightidkiller, function (err, killerstate){
+		lights.killedAnimation(lightidkiller, function (err){
+			setTimeout(function(){
+				lights.setLight(lightidkiller, killerstate.hue, killerstate.sat);
+			},300); // wait some time
+		});
+	});
 }
 
 function playerLeft(player){

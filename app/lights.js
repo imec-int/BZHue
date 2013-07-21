@@ -108,6 +108,12 @@ function isDark(lightid, callback){
 	});
 }
 
+function getLightState(lightid, callback){
+	api.lightStatus(lightid, function (err, result) {
+		if(callback) return callback(err, result.state);
+	});
+}
+
 
 function dimLight(lightid, callback){
 	api.setLightState(lightid, {
@@ -159,6 +165,8 @@ function turnOffDefaultLight(lightid, callback){
 
 
 function beamOfLight(){
+
+
 	burstLight(1);
 	setTimeout(function(){burstLight(2)},150);
 	setTimeout(function(){burstLight(3)},300);
@@ -237,58 +245,51 @@ function deathAnimation(lightid, callback){
 	        if(callback) callback(err);
 	    }
 	);
-
-	// async = suckt
-	// api.setLightState(lightid, {
-	// 	bri: 255,
-	// 	hue: 65535,
-	// 	sat: 255,
-	// 	transitiontime: 0
-	// }, function (err, lights) {
-	// 	if (err) return console.log(err);
-
-
-	// 	api.setLightState(lightid, {
-	// 		bri: 0,
-	// 		transitiontime: 0
-	// 	}, function (err, lights) {
-	// 		if (err) return console.log(err);
-	// 		api.setLightState(lightid, {
-	// 			bri: 255,
-	// 			hue: 65535,
-	// 			sat: 255,
-	// 			transitiontime: 0
-	// 		}, function (err, lights) {
-	// 			if (err) return console.log(err);
-
-
-	// 			api.setLightState(lightid, {
-	// 				bri: 0,
-	// 				transitiontime: 0
-	// 			}, function (err, lights) {
-	// 				if (err) return console.log(err);
-	// 				api.setLightState(lightid, {
-	// 					bri: 255,
-	// 					hue: 65535,
-	// 					sat: 255,
-	// 					transitiontime: 0
-	// 				}, function (err, lights) {
-	// 					if (err) return console.log(err);
-
-
-	// 					api.setLightState(lightid, {
-	// 						bri: 0,
-	// 						transitiontime: 0
-	// 					}, function (err, lights) {
-	// 						if (err) return console.log(err);
-	// 					});
-	// 				});
-	// 			});
-	// 		});
-	// 	});
-	// });
-
 }
+
+function killedAnimation(lightid, callback){
+	function on(){
+		api.setLightState(lightid, {
+			bri: 255,
+			hue: 25717,
+			sat: 254,
+			transitiontime: 0
+		}, function (err, lights) {
+			if (err) console.log(err);
+		});
+	}
+
+	function off(){
+		api.setLightState(lightid, {
+			bri: 0,
+			transitiontime: 0
+		}, function (err, lights) {
+			if (err) console.log(err);
+		});
+	}
+
+	var count = 0;
+	var isOn = false;
+	async.whilst(
+	    function () { return count < 5; },
+	    function (callback) {
+	    	if(isOn){
+	    		off();
+	    		isOn = false;
+	    	}else{
+	    		on();
+	    		isOn = true;
+	    	}
+
+	        count++;
+	        setTimeout(callback, 50);
+	    },
+	    function (err) {
+	        if(callback) callback(err);
+	    }
+	);
+}
+
 
 exports.startlooping  = startlooping;
 exports.stoplooping = stoplooping;
@@ -302,4 +303,5 @@ exports.turnOnDefaultLight = turnOnDefaultLight;
 exports.dimLight = dimLight;
 exports.dimToWhite = dimToWhite;
 exports.deathAnimation = deathAnimation;
-
+exports.killedAnimation = killedAnimation;
+exports.getLightState = getLightState;
