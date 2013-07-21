@@ -83,25 +83,20 @@ app.post('/bzflag', function (req, res){
 			playerSpawn( req.body.player);
 			break;
 		case 'start':
-			// if(!req.body.player) return console.log('no player given');
-			// playerSpawn( req.body.player);
-			for(var name in lights.player2lightid){
-				playerLeft( name);
-			}
+			gameStart();
 			break;
 		case 'stop':
-			for(var name in lights.player2lightid){
+			for(var name in config.player2lightid){
 				playerLeft( name);
 			}
 			break;
 		case 'gameend':
-			for(var name in lights.player2lightid){
+			for(var name in config.player2lightid){
 				playerLeft( name);
 			}
 			break;
 		case 'servermessage':
-			for(var name in lights.player2lightid){
-				// playerDied( lights.player2lightid[name]);
+			for(var name in config.player2lightid){
 				console.log("");
 				console.log("SERVER MESSAGE");
 				console.log("");
@@ -123,6 +118,12 @@ app.post('/bzflag', function (req, res){
 // **********************************************
 // *** BZFlag Events translated to Hue events ***
 // **********************************************
+
+function gameStart(){
+	for(var name in config.player2lightid){
+		playerLeft( name);
+	}
+}
 
 function flagGrabbed(player, flagid){
 	var lightid = config.player2lightid[player];
