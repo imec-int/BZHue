@@ -75,7 +75,7 @@ app.post('/bzflag', function (req, res){
 			break;
 		case 'part':
 			if(!req.body.player) return console.log('no player given');
-			playerDied( req.body.player);
+			playerLeft( req.body.player);
 			break;
 		case 'spawn':
 			if(!req.body.player) return console.log('no player given');
@@ -85,17 +85,17 @@ app.post('/bzflag', function (req, res){
 			// if(!req.body.player) return console.log('no player given');
 			// playerSpawn( req.body.player);
 			for(var name in lights.player2lightid){
-				playerDied( lights.player2lightid[name]);
+				playerLeft( name);
 			}
 			break;
 		case 'stop':
 			for(var name in lights.player2lightid){
-				playerDied( lights.player2lightid[name]);
+				playerLeft( name);
 			}
 			break;
 		case 'gameend':
 			for(var name in lights.player2lightid){
-				playerDied( lights.player2lightid[name]);
+				playerLeft( name);
 			}
 			break;
 		case 'servermessage':
@@ -157,6 +157,17 @@ function playerDied(player){
 		lights.dimToWhite(lightid, function (err){
 			lights.turnOffLight(lightid);
 		});
+	});
+
+}
+
+function playerLeft(player){
+	var lightid = config.player2lightid[player];
+	if(!lightid) return console.log('unknown player: ' + player);
+
+	// dim to white and turn off light
+	lights.dimToWhite(lightid, function (err){
+		lights.turnOffLight(lightid);
 	});
 
 }
