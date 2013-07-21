@@ -4,6 +4,7 @@ BZHue
 Augment BZflag with the Phlips Hue lights (hacked.io project)
 
 Demo video: https://www.youtube.com/watch?v=gxSIqtMNJ_U
+Multi screen recording: https://www.youtube.com/watch?v=Sl75Ypw6eJk
 
 BzHue is a hacking project from the MiXers Sam Decrock, Matthias De Geyter and Robby Wauters.
 
