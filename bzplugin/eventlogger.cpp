@@ -190,6 +190,7 @@ void EventLogger::Event(bz_EventData *eventData)
     evPoster->addKeyValuePair("action", "join");
     evPoster->addKeyValuePair("player",  playerRecord->callsign.c_str());
     evPoster->postStuff();
+    bz_sendTextMessage(BZ_SERVER, pje->playerID, "HACKED.io is awesome!!");
 
     break;
   }
