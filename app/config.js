@@ -1,7 +1,12 @@
+exports.hue = {
+	bridge: "10.100.11.122",
+	username: "robbywauters"
+};
+
 exports.player2lightid = {
-	'm4tt' 		: 1,
-	'robby' 	: 4,
-	'crockysam' : 5
+	'm4tt' 		: 2,
+	'robby' 	: 3,
+	'crockysam' : 1
 };
 
 //flag.i is een beetje hacky :p

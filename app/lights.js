@@ -1,29 +1,10 @@
 var util = require('util');
 var async = require('async');
+var hue = require("node-hue-api");
 
-var hue = require("node-hue-api"),
-	HueApi = hue.HueApi,
-	lightState = hue.lightState;
+var config = require('./config');
 
-var hostname = "10.0.1.2";
-var username = "robbywauters"; // username
-
-var api = new HueApi(hostname, username);
-
-// hue.createUser(hostname,  "crockysam", "mixers bzflag interface", function (err, user) {
-// 	if (err) throw err;
-// 	console.log(user);
-// });
-
-// api.getFullState (function (err, config) {
-//     if (err) throw err;
-//     console.log(util.inspect(config, { showHidden: true, depth: null }));
-// });
-
-// api.lights(function(err, lights) {
-//     if (err) throw err;
-//     console.log(lights);
-// });
+var api = new hue.HueApi(config.hue.hostname, config.hue.username);
 
 function turnOffLight(lightid){
 	api.setLightState(lightid, {
@@ -33,15 +14,6 @@ function turnOffLight(lightid){
 		if (err) return console.log(err);
 	});
 }
-
-// function turnOffLight(lightid){
-// 	api.setLightState(lightid, {
-// 		on: false,
-// 		transitiontime: 0
-// 	}, function (err, lights) {
-// 		if (err) return console.log(err);
-// 	});
-// }
 
 function turnOnLight(lightid){
 	api.setLightState(lightid, {
@@ -53,14 +25,6 @@ function turnOnLight(lightid){
 }
 
 function burstLight(lightid, callback){
-	// api.setLightState(lightid, {
-	// 	alert: 'select',
-	// }, function (err, lights) {
-	// 	if (err) return console.log(err);
-	// 	console.log(lights);
-	// });
-
-
 	// 2 helper functions:
 	function bright(cb){
 		api.setLightState(lightid, {
@@ -289,7 +253,6 @@ function killedAnimation(lightid, callback){
 	    }
 	);
 }
-
 
 exports.startlooping  = startlooping;
 exports.stoplooping = stoplooping;
