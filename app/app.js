@@ -38,7 +38,11 @@ http.createServer(app).listen(app.get('port'), function(){
 });
 
 app.get('/', function (req, res){
-	res.render('index', { title: 'Hello World' });
+	res.render('index', {
+		title: 'BZFlag simulator',
+		players: Object.keys(config.player2lightid),
+		flags: config.flags
+	});
 });
 
 app.get('/beam', function (req, res){
@@ -133,8 +137,7 @@ function flagGrabbed(player, flagid){
 	if(!flag) return console.log('unknown flag: ' + flagid);
 
 	var sat = flag.sat;
-	if(!sat)
-		sat = 255; // most saturated
+	if(!sat) sat = 255; // most saturated
 
 	console.log("Setting flag '" + flag.name + "' for player " + player + " to hue = " + flag.hue + ", sat = " + sat);
 	lights.setLight(lightid, flag.hue, sat);

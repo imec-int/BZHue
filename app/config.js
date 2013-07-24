@@ -1,5 +1,5 @@
 exports.hue = {
-	bridge: "10.100.11.122",
+	hostname: "10.100.11.122",
 	username: "robbywauters"
 };
 
@@ -9,10 +9,9 @@ exports.player2lightid = {
 	'crockysam' : 1
 };
 
-//flag.i is een beetje hacky :p
 exports.flags = {
 	A  : {code: 'A' , name:'Agility'					, hue: 60607, sat: 253},
-	CL : {code: 'CL', name:'Cloaking'					, hue: 61809, sat: 178}, // lichtroos
+	CL : {code: 'CL', name:'Cloaking'					, hue: 61809, sat: 178},
 	G  : {code: 'G' , name:'Genocide'					, hue: 65527, sat: 253},
 	GM : {code: 'GM', name:'Guided Missile'				, hue: 60607, sat: 253},
 	L  : {code: 'L' , name:'Laser'						, hue: 49218, sat: 253},

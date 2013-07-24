@@ -11,7 +11,91 @@ html
 		script(type='text/javascript', src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js')
 		script(type='text/javascript', src='/javascripts/index.js')
 
+		script
+			$(function(){
+				$("#start").click(function (event){
+					$.post('/bzflag', {action: 'start'});
+				});
+
+				$("#stop").click(function (event){
+					$.post('/bzflag', {action: 'stop'});
+				});
+
+				$("#gameend").click(function (event){
+					$.post('/bzflag', {action: 'gameend'});
+				});
+
+				$("#spawn").click(function (event){
+					$.post('/bzflag', {action: 'spawn', player: $("input[name=players]:checked").val() });
+				});
+
+				$("#shotfired").click(function (event){
+					$.post('/bzflag', {action: 'shotfired', player: $("input[name=players]:checked").val() });
+				});
+
+				$("#flagdropped").click(function (event){
+					$.post('/bzflag', {action: 'flagdropped', player: $("input[name=players]:checked").val() });
+				});
+
+				$("#part").click(function (event){
+					$.post('/bzflag', {action: 'part', player: $("input[name=players]:checked").val() });
+				});
+
+				$("#flaggrabbed").click(function (event){
+					$.post('/bzflag', {
+						action : 'flaggrabbed',
+						player : $("input[name=players]:checked").val(),
+						flag   : $("input[name=flags]:checked").val()
+					});
+				});
+				$("#kill").click(function (event){
+					$.post('/bzflag', {
+						action : 'kill',
+						player : $("input[name=players]:checked").val(),
+						victim   : $("input[name=victims]:checked").val()
+					});
+				});
+			});
+
 	body
 		.container
-			.helloworld Hello world
+			fieldset
+				legend Game
+				.btn-group
+					button.btn#start start
+					button.btn#stop stop
+					button.btn#gameend gameend
+			fieldset
+				legend Players
+				- for(var i in players){
+				label.radio
+					input(type='radio', name="players", value='#{players[i]}')
+					| #{players[i]}
+				- }
+				.btn-group
+					button.btn#spawn spawn
+					button.btn#flaggrabbed flaggrabbed
+					button.btn#shotfired shotfired
+					button.btn#flagdropped flagdropped
+					button.btn#part part
+					button.btn#kill kill
+				label Flag (on flaggrabbed):
+				- for(var code in flags){
+				label.radio
+					input(type='radio', name="flags", value='#{code}')
+					| #{flags[code].name}
+				- }
+				label Victim (on kill):
+				- for(var i in players){
+				label.radio
+					input(type='radio', name="victims", value='#{players[i]}')
+					| #{players[i]}
+				- }
+
+
+
+
+
+
+
 
