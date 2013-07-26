@@ -6,6 +6,7 @@ exports.hue = {
 exports.player2lightid = {
 	'm4tt' 		: 2,
 	'robby' 	: 3,
+	'_robby' 	: 3,
 	'crockysam' : 1
 };
 
