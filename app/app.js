@@ -141,12 +141,18 @@ function flagGrabbed(player, flagid){
 
 	console.log("Setting flag '" + flag.name + "' for player " + player + " to hue = " + flag.hue + ", sat = " + sat);
 	lights.setLight(lightid, flag.hue, sat);
+
+	if(flag.animate)
+		lights.turnOnAnimation(lightid);
+	else
+		lights.turnOffAnimation(lightid);
 }
 
 function flagDropped(player){
 	var lightid = config.player2lightid[player];
 	if(!lightid) return console.log('unknown player: ' + player);
 	lights.setLight(lightid, 65535, 0);
+	lights.turnOffAnimation(lightid);
 }
 
 function shotFired(player){
