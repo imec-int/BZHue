@@ -1,10 +1,53 @@
 var util = require('util');
 var async = require('async');
 var hue = require("node-hue-api");
+var _ = require('underscore');
 
 var config = require('./config');
 
 var api = new hue.HueApi(config.hue.hostname, config.hue.username);
+
+var animateStates = {};
+var animationIsOn = false;
+animateLight();
+
+function turnOnAnimation(lightid){
+	animateStates[lightid] = {lightid: lightid, animate: true, isBright: false};
+}
+
+function turnOffAnimation(lightid){
+	animateStates[lightid].animate = false;
+}
+
+// animateLight() keeps running constantly
+function animateLight(){
+	var transitiontime = config.animateTime;
+	async.forEach(_.toArray(animateStates), function (animateState, $){
+
+		if(!animateState.isBright && animateState.animate){
+			api.setLightState(animateState.lightid, {
+				bri: 255,
+				transitiontime: Math.round(transitiontime/100)
+			}, function (err){
+				animateState.isBright = true;
+				$();
+			});
+		}else if(animateState.isBright){
+			api.setLightState(animateState.lightid, {
+				bri: 0,
+				transitiontime: Math.round(transitiontime/100)
+			}, function (err){
+				animateState.isBright = false;
+				$();
+			})
+		}else{
+			$();
+		}
+
+	}, function (err){
+		setTimeout(function(){ animateLight(); },transitiontime);
+	});
+}
 
 function turnOffLight(lightid){
 	api.setLightState(lightid, {
@@ -161,10 +204,12 @@ function setLight(lightid, hue, sat, callback){
 		sat: sat,
 		transitiontime: 0
 	}, function (err, lights) {
-		if (err) console.log(err);
-		if(callback) callback();
+		if (err) return console.log(err);
+		if(callback) return callback();
 	});
 }
+
+
 
 
 function deathAnimation(lightid, callback){
@@ -268,3 +313,5 @@ exports.dimToWhite = dimToWhite;
 exports.deathAnimation = deathAnimation;
 exports.killedAnimation = killedAnimation;
 exports.getLightState = getLightState;
+exports.turnOnAnimation = turnOnAnimation;
+exports.turnOffAnimation = turnOffAnimation;

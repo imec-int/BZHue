@@ -8,7 +8,8 @@
     "express": "3.0.0rc4",
     "stylus": "*",
     "jade": "~0.28.1",
+    "node-hue-api": "~0.2.1",
     "async": "~0.2.9",
-    "node-hue-api": "~0.2.1"
+    "underscore": "~1.5.1"
   }
 }
