@@ -16,7 +16,8 @@ function turnOnAnimation(lightid){
 }
 
 function turnOffAnimation(lightid){
-	animateStates[lightid].animate = false;
+	if(animateStates[lightid])
+		animateStates[lightid].animate = false;
 }
 
 // animateLight() keeps running constantly
